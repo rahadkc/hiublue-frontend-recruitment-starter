@@ -1,5 +1,5 @@
-import { Theme } from '@mui/material/styles';
 import { buttonClasses } from '@mui/material/Button';
+import { Theme } from '@mui/material/styles';
 
 import Iconify from 'src/components/iconify';
 
@@ -28,7 +28,7 @@ const calendarIcon = () => <Iconify icon="solar:calendar-mark-bold-duotone" widt
 
 const clockIcon = () => <Iconify icon="solar:clock-circle-outline" width={24} />;
 
-const desktopTypes = dateList.reduce((result: Record<string, any>, currentValue) => {
+const desktopTypes = dateList.reduce((result: Record<string, unknown>, currentValue) => {
   result[`Mui${currentValue}`] = {
     defaultProps: {
       slots: {
@@ -43,7 +43,7 @@ const desktopTypes = dateList.reduce((result: Record<string, any>, currentValue)
   return result;
 }, {});
 
-const timeTypes = timeList.reduce((result: Record<string, any>, currentValue) => {
+const timeTypes = timeList.reduce((result: Record<string, unknown>, currentValue) => {
   result[`Mui${currentValue}`] = {
     defaultProps: {
       slots: {

@@ -3,7 +3,7 @@ import { Barlow, Public_Sans } from 'next/font/google';
 // ----------------------------------------------------------------------
 
 export function remToPx(value: string) {
-  return Math.round(parseFloat(value) * 16);
+  return Math.round(Number.parseFloat(value) * 16);
 }
 
 export function pxToRem(value: number) {

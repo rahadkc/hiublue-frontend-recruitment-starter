@@ -1,5 +1,5 @@
 'use client';
 
-export default function DashboardView(){
+export default function DashboardView() {
   return <>Dashboard View</>;
 }

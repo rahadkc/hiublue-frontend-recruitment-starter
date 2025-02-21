@@ -1,6 +1,6 @@
-import { alpha, Theme } from '@mui/material/styles';
 import { PaginationProps } from '@mui/material/Pagination';
 import { paginationItemClasses } from '@mui/material/PaginationItem';
+import { Theme, alpha } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 

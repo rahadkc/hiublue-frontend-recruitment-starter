@@ -38,7 +38,7 @@ declare module '@mui/material/styles' {
 // ----------------------------------------------------------------------
 
 export function customShadows() {
-  const color =  grey[500];
+  const color = grey[500];
 
   const transparent = alpha(color, 0.16);
 
