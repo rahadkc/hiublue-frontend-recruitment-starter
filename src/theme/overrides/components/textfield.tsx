@@ -2,7 +2,7 @@ import { filledInputClasses } from '@mui/material/FilledInput';
 import { inputBaseClasses } from '@mui/material/InputBase';
 import { inputLabelClasses } from '@mui/material/InputLabel';
 import { outlinedInputClasses } from '@mui/material/OutlinedInput';
-import { Theme, alpha } from '@mui/material/styles';
+import { type Theme, alpha } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
@@ -33,10 +33,13 @@ export function textField(theme: Theme) {
       styleOverrides: {
         root: {
           ...font.value,
-          color: color.placeholder,
+          marginBottom: theme.spacing(1.25),
+          display: 'inline-block',
+          color: color.focused,
+          fontWeight: 700,
+          lineHeight: theme.spacing(2.75),
           [`&.${inputLabelClasses.shrink}`]: {
             ...font.label,
-            fontWeight: 600,
             color: color.active,
             [`&.${inputLabelClasses.focused}`]: {
               color: color.focused,

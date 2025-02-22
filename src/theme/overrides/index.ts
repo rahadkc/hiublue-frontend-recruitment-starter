@@ -18,6 +18,7 @@ import { radio } from './components/radio';
 import { select } from './components/select';
 import { table } from './components/table';
 import { textField } from './components/textfield';
+import { toolBar } from './components/toolbar';
 import { typography } from './components/typography';
 
 // ----------------------------------------------------------------------
@@ -26,6 +27,7 @@ export function componentsOverrides(theme: Theme) {
   return merge(
     alert(theme),
     appBar(theme),
+    toolBar(theme),
     autocomplete(theme),
     button(theme),
     card(theme),

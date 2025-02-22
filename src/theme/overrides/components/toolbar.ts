@@ -2,13 +2,13 @@ import type { Theme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
-export function appBar(theme: Theme) {
+export function toolBar(_theme: Theme) {
   return {
-    MuiAppBar: {
+    MuiToolbar: {
       styleOverrides: {
         root: {
-          boxShadow: theme.customShadows.drop,
-          backgroundColor: theme.palette.background.paper,
+          height: 72,
+          minHeight: 72,
         },
       },
     },
