@@ -1,6 +1,7 @@
 'use client';
 
 import { useDashboardSummary } from '@/hooks/api/useDashboardSummary';
+import { useAuth } from '@/hooks/useAuth';
 
 // const offerData = {
 //   plan_type: 'monthly' as PlanType,
@@ -25,5 +26,9 @@ export default function DashboardView() {
   // useEffect(() => {
   //   createOffer();
   // }, []);
+  // const { isAuthenticated } = useAuth();
+
+  // console.log({ isAuthenticated });
+
   return <>Dashboard View</>;
 }

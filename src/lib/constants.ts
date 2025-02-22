@@ -1,12 +1,11 @@
-// Routes
-
 export const ROUTES = {
   dashboard: '/dashboard',
   onboard: '/onboard',
+  login: '/login',
 } as const;
 
 export const ENDPOINTS = {
-  auth: '/login',
+  login: '/login',
   summary: '/dashboard/summary',
   stat: '/dashboard/stat',
   offer: '/offers',

@@ -1,5 +1,6 @@
 'use client';
 
+import { useAuth } from '@/hooks/useAuth';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
@@ -13,7 +14,9 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import * as React from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -55,7 +58,43 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
+type LoginFormInputs = {
+  email: string;
+  password: string;
+  remember: boolean;
+};
+
 export default function SignIn() {
+  const { isAuthenticated = false, login } = useAuth();
+  const router = useRouter();
+  const [error, setError] = useState('');
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormInputs>();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/dashboard');
+    }
+  }, [isAuthenticated]);
+
+  const onSubmit = async (data: LoginFormInputs) => {
+    setError('');
+
+    try {
+      await login(data.email, data.password);
+      router.push('/dashboard');
+    } catch (error) {
+      console.error('Login error:', error);
+      setError('Something went wrong. Please try again.');
+    }
+  };
+
+  if (isAuthenticated) return null;
+
   return (
     <>
       <CssBaseline enableColorScheme />
@@ -70,7 +109,7 @@ export default function SignIn() {
           </Typography>
           <Box
             component="form"
-            onSubmit={() => {}}
+            onSubmit={handleSubmit(onSubmit)}
             noValidate
             sx={{
               display: 'flex',
@@ -83,43 +122,66 @@ export default function SignIn() {
               <FormLabel htmlFor="email">Email</FormLabel>
               <TextField
                 type="email"
-                name="email"
                 placeholder="your@email.com"
                 autoComplete="email"
                 autoFocus
-                required
                 fullWidth
                 variant="outlined"
                 size="small"
                 sx={{ mt: 1 }}
+                {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: 'Invalid email format',
+                  },
+                })}
+                error={!!errors.email}
+                helperText={errors.email?.message}
               />
             </FormControl>
+
             <FormControl>
               <FormLabel htmlFor="password">Password</FormLabel>
               <TextField
-                name="password"
-                placeholder="••••••"
                 type="password"
-                id="password"
+                placeholder="••••••"
                 autoComplete="current-password"
-                required
                 fullWidth
                 variant="outlined"
                 size="small"
                 sx={{ mt: 1 }}
+                {...register('password', {
+                  required: 'Password is required',
+                  minLength: {
+                    value: 6,
+                    message: 'Password must be at least 6 characters',
+                  },
+                })}
+                error={!!errors.password}
+                helperText={errors.password?.message}
               />
             </FormControl>
+
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox {...register('remember')} color="primary" />}
               label="Remember me"
             />
-            <Button type="submit" fullWidth variant="contained" onClick={() => {}}>
-              Sign in
+
+            {error && (
+              <Typography color="error" sx={{ textAlign: 'center' }}>
+                {error}
+              </Typography>
+            )}
+
+            <Button type="submit" fullWidth variant="contained" disabled={isSubmitting}>
+              {isSubmitting ? 'Signing in...' : 'Sign in'}
             </Button>
+
             <Link
               component="button"
               type="button"
-              onClick={() => {}}
+              onClick={() => router.push('/forgot-password')}
               variant="body2"
               sx={{ alignSelf: 'center' }}
             >

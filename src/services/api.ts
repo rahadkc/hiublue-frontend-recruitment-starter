@@ -1,16 +1,15 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Attach Authorization Token
 apiClient.interceptors.request.use(
   (config) => {
-    const token = typeof window !== 'undefined' ? 'fake-jwt-token' : null;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -22,7 +21,6 @@ apiClient.interceptors.request.use(
   },
 );
 
-// Response Error Handling
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
