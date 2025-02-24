@@ -2,7 +2,7 @@ import { ENDPOINTS } from '@/lib/constants';
 import apiClient from '@/services/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-type Offer = {
+type OfferType = {
   id: number;
   user_name: string;
   email: string;
@@ -32,7 +32,7 @@ type Meta = {
 };
 
 type OffersResponse = {
-  data: Offer[];
+  data: OfferType[];
   links: Links;
   meta: Meta;
 };
@@ -69,7 +69,7 @@ const fetchOffers = async (page: number, perPage: number) => {
 
 const createOffer = async (offerData: OfferRequest): Promise<OfferCreationResponse> => {
   try {
-    const { data } = await apiClient.post<OfferCreationResponse>('/offers', offerData);
+    const { data } = await apiClient.post<OfferCreationResponse>(ENDPOINTS.offer, offerData);
     return data;
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -103,4 +103,4 @@ const useCreateOffer = () => {
   });
 };
 
-export { useCreateOffer, useOffers, type Offer };
+export { useCreateOffer, useOffers };

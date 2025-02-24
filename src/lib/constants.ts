@@ -11,3 +11,8 @@ export const ENDPOINTS = {
   offer: '/offers',
   users: '/users',
 } as const;
+
+export const MESSAGES = {
+  CREATE_OFFER_SUCCESS: 'Create Offer successfully!',
+  CREATE_OFFER_FAIL: 'Failed to Create Offer.',
+} as const;
