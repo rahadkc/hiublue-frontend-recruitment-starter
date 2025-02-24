@@ -22,4 +22,6 @@ export const WIDGET_TEXT = {
   CLICKS: 'Total Clicks',
   APPEARANCE: 'Total Appearances',
   TREND: 'previous month',
+  VISIT_STAT: 'Website Visits',
+  OFFER_STAT: 'Offer Sent',
 } as const;

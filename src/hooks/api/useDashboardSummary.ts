@@ -30,7 +30,7 @@ export const useDashboardSummary = (filter: string) => {
   return useQuery({
     queryKey: ['dashboardSummary'],
     queryFn: () => fetchDashboardSummary(filter),
-    refetchInterval: 30000,
-    staleTime: 25000,
+    refetchInterval: 15000,
+    staleTime: 10000,
   });
 };

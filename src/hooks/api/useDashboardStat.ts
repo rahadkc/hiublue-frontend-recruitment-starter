@@ -31,5 +31,7 @@ export const useDashboardStat = (filter: string) => {
   return useQuery({
     queryKey: ['dashboardStat'],
     queryFn: () => fetchDashboardStat(filter),
+    refetchInterval: 15000,
+    staleTime: 10000,
   });
 };
