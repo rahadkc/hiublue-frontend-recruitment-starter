@@ -1,3 +1,4 @@
+import { ENDPOINTS } from '@/lib/constants';
 import apiClient from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
 
@@ -14,7 +15,7 @@ export type DashboardSummary = {
 
 const fetchDashboardSummary = async (filter: string): Promise<DashboardSummary> => {
   try {
-    const { data } = await apiClient.get<DashboardSummary>(`/dashboard/summary?filter=${filter}`);
+    const { data } = await apiClient.get<DashboardSummary>(`${ENDPOINTS.summary}?filter=${filter}`);
 
     return data;
   } catch (error: unknown) {

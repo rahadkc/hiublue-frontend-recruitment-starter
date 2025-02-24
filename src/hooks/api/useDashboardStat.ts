@@ -1,3 +1,4 @@
+import { ENDPOINTS } from '@/lib/constants';
 import apiClient from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
 
@@ -15,7 +16,7 @@ export type DashboardStat = {
 
 export const fetchDashboardStat = async (filter: string): Promise<DashboardStat> => {
   try {
-    const { data } = await apiClient.get<DashboardStat>(`/dashboard/stat?filter=${filter}`);
+    const { data } = await apiClient.get<DashboardStat>(`${ENDPOINTS.stat}?filter=${filter}`);
 
     return data;
   } catch (error: unknown) {

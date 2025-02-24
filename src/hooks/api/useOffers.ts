@@ -1,3 +1,4 @@
+import { ENDPOINTS } from '@/lib/constants';
 import apiClient from '@/services/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -36,14 +37,14 @@ type OffersResponse = {
   meta: Meta;
 };
 
-type PlanType = 'monthly' | 'yearly' | 'pay_as_you_go';
-type Addition = 'refundable' | 'on_demand' | 'negotiable';
+export type PlanType = 'monthly' | 'yearly' | 'pay_as_you_go';
+export type Addition = 'refundable' | 'on_demand' | 'negotiable';
 
 type OfferRequest = {
   plan_type: PlanType;
   additions: Addition[];
   user_id: number;
-  expired: string; // ISO date format (e.g., "YYYY-MM-DD")
+  expired: Date;
   price: number;
 };
 
@@ -55,7 +56,7 @@ type OfferCreationResponse = {
 const fetchOffers = async (page: number, perPage: number) => {
   try {
     const { data } = await apiClient.get<OffersResponse>(
-      `/offers?page=${page}&per_page=${perPage}`,
+      `${ENDPOINTS.offer}?page=${page}&per_page=${perPage}`,
     );
     return data;
   } catch (error: unknown) {
@@ -85,38 +86,6 @@ const useOffers = (page = 1, perPage = 5) => {
   });
 };
 
-// const useCreateOffer = () => {
-//   const queryClient = useQueryClient();
-//   return useMutation({
-//     mutationFn: createOffer,
-//     onSuccess: () => {
-//       queryClient.invalidateQueries({ queryKey: ['offers'] });
-//     },
-//     onError: (error: unknown) => {
-//       if (error instanceof Error) {
-//         throw new Error(error.message);
-//       }
-//       throw new Error('Error creating offer');
-//     },
-//   });
-// };
-
-// const useCreateOffer = () => {
-//   const queryClient = useQueryClient();
-//   return useMutation<OfferRequest, Error, OfferRequest>({
-//     mutationFn: createOffer,
-//     onSuccess: () => {
-//       queryClient.invalidateQueries({ queryKey: ['offers'] });
-//     },
-//     onError: (error: unknown) => {
-//       if (error instanceof Error) {
-//         throw new Error(error.message);
-//       }
-//       throw new Error('Error creating offer');
-//     },
-//   });
-// };
-
 const useCreateOffer = () => {
   const queryClient = useQueryClient();
 
@@ -134,4 +103,4 @@ const useCreateOffer = () => {
   });
 };
 
-export { useCreateOffer, useOffers, type Offer, type PlanType, type Addition };
+export { useCreateOffer, useOffers, type Offer };
