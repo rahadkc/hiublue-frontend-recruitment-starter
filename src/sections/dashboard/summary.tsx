@@ -1,7 +1,7 @@
 'use client';
 
-import CardSkeleton from '@/components/ui/card-skeleton';
 import CardWidget from '@/components/ui/card-widget';
+import CardSkeleton from '@/components/ui/skeletons/card';
 import { useDashboardSummary } from '@/hooks/api/useDashboardSummary';
 import { WIDGET_TEXT } from '@/lib/constants';
 import Grid from '@mui/material/Grid2';
@@ -30,7 +30,7 @@ const Summary = () => {
 
   return (
     <Grid container spacing={2}>
-      <Grid size={4}>
+      <Grid size={{ xs: 12, sm: 6, md: 4 }}>
         {isLoading ? (
           <CardSkeleton />
         ) : (
@@ -41,7 +41,7 @@ const Summary = () => {
           />
         )}
       </Grid>
-      <Grid size={4}>
+      <Grid size={{ xs: 12, sm: 6, md: 4 }}>
         {isLoading ? (
           <CardSkeleton />
         ) : (
@@ -52,7 +52,7 @@ const Summary = () => {
           />
         )}
       </Grid>
-      <Grid size={4}>
+      <Grid size={{ xs: 12, sm: 6, md: 4 }}>
         {isLoading ? (
           <CardSkeleton />
         ) : (

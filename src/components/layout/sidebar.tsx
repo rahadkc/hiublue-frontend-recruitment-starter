@@ -13,9 +13,9 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { ROUTES } from '@/lib/constants';
-import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useSidebar } from '@/hooks/useSidebar';
+import { ROUTES, SIDEBAR } from '@/lib/constants';
+import { usePathname } from 'next/navigation';
 import Iconify from '../iconify';
 
 const StyledNextLink = styled(Link)(() => ({
@@ -25,28 +25,50 @@ const StyledNextLink = styled(Link)(() => ({
   },
 }));
 
-const Sidebar = () => {
-  const [open, setOpen] = useState(true);
-  const pathname = usePathname();
+const navigation = [
+  {
+    segment: ROUTES.dashboard,
+    title: 'Dashboard',
+    icon: 'vaadin:dashboard',
+  },
+  {
+    segment: ROUTES.onboarding,
+    title: 'Onboarding',
+    icon: 'solar:bag-bold-duotone',
+  },
+] as const;
 
-  const commonLeftSpacing = { paddingLeft: open ? '28px' : '18px' };
+const Sidebar = () => {
+  const pathname = usePathname();
+  const { isSidebarOpen, isSmallScreen, toggleSidebar } = useSidebar();
+  const commonLeftSpacing = { paddingLeft: isSidebarOpen ? '28px' : '18px' };
 
   return (
     <Drawer
-      variant="permanent"
-      open={open}
-      sx={{ width: open ? 280 : 60, transition: 'width 0.3s' }}
+      variant={isSmallScreen ? 'temporary' : 'permanent'}
+      open={isSidebarOpen}
+      onClose={toggleSidebar}
+      sx={{
+        width: isSidebarOpen ? SIDEBAR.EXPAND : isSmallScreen ? 0 : SIDEBAR.SMALL,
+        transition: 'width 0.3s',
+      }}
       PaperProps={{ sx: { width: 'inherit' } }}
     >
       <Button
-        onClick={() => setOpen(!open)}
+        onClick={toggleSidebar}
         sx={{ justifyContent: 'left', paddingTop: 0, paddingBottom: 0 }}
       >
         <Image priority src="/assets/logo.svg" height={72} width={70} alt="Follow us on Twitter" />
       </Button>
 
-      <div style={{ paddingBottom: '18px', ...commonLeftSpacing }}>
-        {open ? (
+      <div
+        style={{
+          paddingBottom: '18px',
+          paddingTop: isSmallScreen ? '18px' : '0px',
+          ...commonLeftSpacing,
+        }}
+      >
+        {isSidebarOpen ? (
           <Typography variant="overline" gutterBottom>
             Overview
           </Typography>
@@ -56,32 +78,16 @@ const Sidebar = () => {
       </div>
 
       <List>
-        <StyledNextLink href="/" passHref>
-          <ListItemButton sx={commonLeftSpacing} selected={pathname === ROUTES.dashboard}>
-            <ListItemIcon>
-              <Iconify icon={'vaadin:dashboard'} width={24} height={24} />
-            </ListItemIcon>
-            {open && <ListItemText secondary="Dashboard" />}
-          </ListItemButton>
-        </StyledNextLink>
-
-        <StyledNextLink href={`${ROUTES.onboarding}`} passHref>
-          <ListItemButton
-            sx={{
-              ...commonLeftSpacing,
-              textDecoration: 'none',
-              '&:hover': {
-                textDecoration: 'none',
-              },
-            }}
-            selected={pathname === ROUTES.onboarding}
-          >
-            <ListItemIcon>
-              <Iconify icon={'solar:bag-bold-duotone'} width={24} height={24} />
-            </ListItemIcon>
-            {open && <ListItemText secondary="Onboarding" />}
-          </ListItemButton>
-        </StyledNextLink>
+        {navigation.map((item) => (
+          <StyledNextLink key={item.segment} href={`${item.segment}`} passHref>
+            <ListItemButton sx={{ ...commonLeftSpacing }} selected={pathname === item.segment}>
+              <ListItemIcon>
+                <Iconify icon={`${item.icon}`} width={24} height={24} />
+              </ListItemIcon>
+              {isSidebarOpen && <ListItemText secondary={item.title} />}
+            </ListItemButton>
+          </StyledNextLink>
+        ))}
       </List>
     </Drawer>
   );
