@@ -24,4 +24,10 @@ export const WIDGET_TEXT = {
   TREND: 'previous month',
   VISIT_STAT: 'Website Visits',
   OFFER_STAT: 'Offer Sent',
+  OFFER_LIST: 'Offer List',
+} as const;
+
+export const SIDEBAR = {
+  EXPAND: 280,
+  SMALL: 60,
 } as const;

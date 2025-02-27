@@ -29,7 +29,8 @@
 					},
 					"suspicious": {
 						"noConsoleLog": "warn",
-						"noExplicitAny": "warn"
+						"noExplicitAny": "warn",
+						"noArrayIndexKey": "warn"
 					},
 					"performance": {
 						"noAccumulatingSpread": "info"

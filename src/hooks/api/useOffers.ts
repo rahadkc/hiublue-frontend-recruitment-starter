@@ -39,6 +39,7 @@ type OffersResponse = {
 
 export type PlanType = 'monthly' | 'yearly' | 'pay_as_you_go';
 export type Addition = 'refundable' | 'on_demand' | 'negotiable';
+export type StatusType = 'accepted' | 'rejected' | 'pending';
 
 type OfferRequest = {
   plan_type: PlanType;
@@ -53,10 +54,18 @@ type OfferCreationResponse = {
   data: OfferRequest;
 };
 
-const fetchOffers = async (page: number, perPage: number) => {
+const fetchOffers = async (
+  page: number,
+  perPage: number,
+  search: string,
+  type?: PlanType | '',
+  status?: StatusType | '',
+) => {
   try {
+    const effectivePage = search ? 1 : page;
+
     const { data } = await apiClient.get<OffersResponse>(
-      `${ENDPOINTS.offer}?page=${page}&per_page=${perPage}`,
+      `${ENDPOINTS.offer}?page=${effectivePage}&per_page=${perPage}&search=${search}&type=${type || ''}&status=${status || ''}`,
     );
     return data;
   } catch (error: unknown) {
@@ -70,6 +79,7 @@ const fetchOffers = async (page: number, perPage: number) => {
 const createOffer = async (offerData: OfferRequest): Promise<OfferCreationResponse> => {
   try {
     const { data } = await apiClient.post<OfferCreationResponse>(ENDPOINTS.offer, offerData);
+
     return data;
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -79,10 +89,23 @@ const createOffer = async (offerData: OfferRequest): Promise<OfferCreationRespon
   }
 };
 
-const useOffers = (page = 1, perPage = 5) => {
+// const useOffers = (page = 1, perPage = 5, search = '', type= '' , status = '') => {
+//   return useQuery({
+//     queryKey: ['offers', page],
+//     queryFn: () => fetchOffers(page, perPage, search, type, status),
+//   });
+// };
+
+const useOffers = (
+  page = 1,
+  perPage = 5,
+  search = '',
+  type?: PlanType | '',
+  status?: StatusType | '',
+) => {
   return useQuery({
-    queryKey: ['offers', page],
-    queryFn: () => fetchOffers(page, perPage),
+    queryKey: ['offers', page, search, type, status],
+    queryFn: () => fetchOffers(page, perPage, search, type, status),
   });
 };
 
