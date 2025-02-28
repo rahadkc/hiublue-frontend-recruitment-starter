@@ -1,6 +1,7 @@
 import { ENDPOINTS } from '@/lib/constants';
 import apiClient from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'next/navigation';
 
 type Day = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
 
@@ -29,7 +30,7 @@ export const fetchDashboardStat = async (filter: string): Promise<DashboardStat>
 
 export const useDashboardStat = (filter: string) => {
   return useQuery({
-    queryKey: ['dashboardStat'],
+    queryKey: ['dashboardStat', filter],
     queryFn: () => fetchDashboardStat(filter),
     refetchInterval: 15000,
     staleTime: 10000,

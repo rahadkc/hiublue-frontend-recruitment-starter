@@ -8,9 +8,9 @@ import { ReactNode } from 'react';
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', overflowX: 'hidden' }}>
         <Sidebar />
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, overflowX: 'hidden' }}>
           <Header />
           <Box sx={{ p: 3 }}>{children}</Box>
         </Box>

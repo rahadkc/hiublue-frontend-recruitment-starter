@@ -5,10 +5,13 @@ import CardSkeleton from '@/components/ui/skeletons/card';
 import { useDashboardSummary } from '@/hooks/api/useDashboardSummary';
 import { WIDGET_TEXT } from '@/lib/constants';
 import Grid from '@mui/material/Grid2';
+import { useSearchParams } from 'next/navigation';
 import React from 'react';
 
 const Summary = () => {
-  const { data, isLoading, error } = useDashboardSummary('this-week');
+  const searchParams = useSearchParams();
+  const filter = searchParams.get('filter') || 'this-week';
+  const { data, isLoading, error } = useDashboardSummary(filter);
 
   const current = data?.current || { active_users: 0, clicks: 0, appearance: 0 };
   const previous = data?.previous || { active_users: 0, clicks: 0, appearance: 0 };

@@ -3,12 +3,15 @@
 import { useDashboardStat } from '@/hooks/api/useDashboardStat';
 import { Card, Skeleton, useTheme } from '@mui/material';
 import dynamic from 'next/dynamic';
+import { useSearchParams } from 'next/navigation';
 import React from 'react';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const WebsiteVisitsChart = () => {
-  const { data, isLoading, error } = useDashboardStat('this-week');
+  const searchParams = useSearchParams();
+  const filter = searchParams.get('filter') || 'this-week';
+  const { data, isLoading, error } = useDashboardStat(filter);
   const theme = useTheme();
 
   const defaultData = {

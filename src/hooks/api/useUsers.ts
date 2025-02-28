@@ -52,7 +52,7 @@ const fetchUsers = async (page: number, perPage: number): Promise<UsersResponse>
 
 export const useUsers = (page = 1, perPage = 5) => {
   return useQuery<UsersResponse>({
-    queryKey: ['users', page],
+    queryKey: ['users', page, perPage],
     queryFn: () => fetchUsers(page, perPage),
   });
 };

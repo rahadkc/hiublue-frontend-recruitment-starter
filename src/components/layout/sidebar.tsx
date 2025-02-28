@@ -49,8 +49,9 @@ const Sidebar = () => {
       open={isSidebarOpen}
       onClose={toggleSidebar}
       sx={{
+        // width: isSidebarOpen ? SIDEBAR.EXPAND : isSmallScreen ? 0 : SIDEBAR.SMALL,
         width: isSidebarOpen ? SIDEBAR.EXPAND : isSmallScreen ? 0 : SIDEBAR.SMALL,
-        transition: 'width 0.3s',
+        // transition: 'width 0.3s',
       }}
       PaperProps={{ sx: { width: 'inherit' } }}
     >
@@ -58,7 +59,7 @@ const Sidebar = () => {
         onClick={toggleSidebar}
         sx={{ justifyContent: 'left', paddingTop: 0, paddingBottom: 0 }}
       >
-        <Image priority src="/assets/logo.svg" height={72} width={70} alt="Follow us on Twitter" />
+        <Image priority src="/assets/logo.svg" height={72} width={72} alt="Follow us on Twitter" />
       </Button>
 
       <div

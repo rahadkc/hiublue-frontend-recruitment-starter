@@ -28,7 +28,7 @@ const fetchDashboardSummary = async (filter: string): Promise<DashboardSummary> 
 
 export const useDashboardSummary = (filter: string) => {
   return useQuery({
-    queryKey: ['dashboardSummary'],
+    queryKey: ['dashboardSummary', filter],
     queryFn: () => fetchDashboardSummary(filter),
     refetchInterval: 15000,
     staleTime: 10000,

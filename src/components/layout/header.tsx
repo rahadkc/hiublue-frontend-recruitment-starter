@@ -33,7 +33,7 @@ const Header = () => {
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
+        vertical: 'bottom',
         horizontal: 'right',
       }}
       id={menuId}
@@ -63,7 +63,7 @@ const Header = () => {
                 paddingX: 0,
               }}
             >
-              <Image priority src="/assets/logo.svg" height={72} width={70} alt="Logo" />
+              <Image priority src="/assets/logo.png" height={48} width={48} alt="Logo" />
             </Button>
           ) : (
             <></>
@@ -80,7 +80,7 @@ const Header = () => {
             onClick={handleProfileMenuOpen}
             color="inherit"
           >
-            <Avatar src="https://avatar.iran.liara.run/public/job/farmer/male" />
+            <Avatar src="/assets/avatar.png" />
           </IconButton>
         </Toolbar>
       </AppBar>

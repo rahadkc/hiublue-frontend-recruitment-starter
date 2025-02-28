@@ -188,22 +188,23 @@ const DataTable = <T extends { id: number | string }>({
   onPageChange: (newPage: number) => void;
   onRowsPerPageChange: (newRowsPerPage: number) => void;
 }) => {
-  if (loading)
-    return (
-      <Card
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-          borderRadius: 0,
-        }}
-      >
-        <TableSkeleton rows={skeletonRows} columns={skeletonCols} />
-      </Card>
-    );
+  //   if (loading){
+  //     return (
+  //       <Card
+  //         sx={{
+  //           display: 'flex',
+  //           justifyContent: 'center',
+  //           alignItems: 'center',
+  //           width: '100%',
+  //           borderRadius: 0,
+  //         }}
+  //       >
+  //         <TableSkeleton rows={skeletonRows} columns={skeletonCols} />
+  //       </Card>
+  //     );
+  // }
 
-  if (error)
+  if (error) {
     return (
       <Card
         sx={{
@@ -216,42 +217,64 @@ const DataTable = <T extends { id: number | string }>({
         <Typography color="error">Error loading data.</Typography>
       </Card>
     );
+  }
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            {columns.map((column) => (
-              <TableCell key={column.id.toString()} align={column.align || 'left'}>
-                {column.label}
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row) => (
-            <TableRow key={row.id}>
-              {columns.map((column) => {
-                if (column.renderActions) {
+    <>
+      <TableContainer sx={{ overflowX: 'auto' }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell key={column.id.toString()} align={column.align || 'left'}>
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={columns.length}>
+                  {/* <Card
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      width: '100%',
+                      borderRadius: 0,
+                    }}
+                  > */}
+                  <TableSkeleton rows={skeletonRows} columns={skeletonCols} />
+                  {/* </Card> */}
+                </TableCell>
+              </TableRow>
+            ) : (
+              <></>
+            )}
+            {data.map((row) => (
+              <TableRow key={row.id}>
+                {columns.map((column) => {
+                  if (column.renderActions) {
+                    return (
+                      <TableCell key={column.id.toString()} align="center">
+                        {column.renderActions(row)}
+                      </TableCell>
+                    );
+                  }
+
+                  const value = row[column.id];
                   return (
-                    <TableCell key={column.id.toString()} align="center">
-                      {column.renderActions(row)}
+                    <TableCell key={column.id.toString()} align={column.align || 'left'}>
+                      {column.format ? column.format(value) : (value as React.ReactNode)}
                     </TableCell>
                   );
-                }
-
-                const value = row[column.id];
-                return (
-                  <TableCell key={column.id.toString()} align={column.align || 'left'}>
-                    {column.format ? column.format(value) : (value as React.ReactNode)}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                })}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
@@ -263,7 +286,7 @@ const DataTable = <T extends { id: number | string }>({
           onRowsPerPageChange(Number.parseInt(event.target.value, 10))
         }
       />
-    </TableContainer>
+    </>
   );
 };
 

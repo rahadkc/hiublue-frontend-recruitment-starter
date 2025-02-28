@@ -2,7 +2,7 @@ import { ENDPOINTS } from '@/lib/constants';
 import apiClient from '@/services/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-type OfferType = {
+export type OfferType = {
   id: number;
   user_name: string;
   email: string;
@@ -54,19 +54,23 @@ type OfferCreationResponse = {
   data: OfferRequest;
 };
 
-const fetchOffers = async (
-  page: number,
-  perPage: number,
-  search: string,
-  type?: PlanType | '',
-  status?: StatusType | '',
-) => {
+export type ParamsType = {
+  page: number;
+  perPage: number;
+  search: string;
+  type?: PlanType | 'all';
+  status?: StatusType | '';
+};
+
+const fetchOffers = async ({ page, perPage, search, type, status }: ParamsType) => {
   try {
     const effectivePage = search ? 1 : page;
+    const effectiveType = type === 'all' || !type ? '' : type;
 
     const { data } = await apiClient.get<OffersResponse>(
-      `${ENDPOINTS.offer}?page=${effectivePage}&per_page=${perPage}&search=${search}&type=${type || ''}&status=${status || ''}`,
+      `${ENDPOINTS.offer}?page=${effectivePage}&per_page=${perPage}&search=${search}&type=${effectiveType}&status=${status || ''}`,
     );
+
     return data;
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -89,23 +93,10 @@ const createOffer = async (offerData: OfferRequest): Promise<OfferCreationRespon
   }
 };
 
-// const useOffers = (page = 1, perPage = 5, search = '', type= '' , status = '') => {
-//   return useQuery({
-//     queryKey: ['offers', page],
-//     queryFn: () => fetchOffers(page, perPage, search, type, status),
-//   });
-// };
-
-const useOffers = (
-  page = 1,
-  perPage = 5,
-  search = '',
-  type?: PlanType | '',
-  status?: StatusType | '',
-) => {
+const useOffers = ({ page = 1, perPage = 5, search = '', type, status }: ParamsType) => {
   return useQuery({
-    queryKey: ['offers', page, search, type, status],
-    queryFn: () => fetchOffers(page, perPage, search, type, status),
+    queryKey: ['offers', page, perPage, search, type, status],
+    queryFn: () => fetchOffers({ page, perPage, search, type, status }),
   });
 };
 
