@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '@/hooks/useAuth';
+import { ENDPOINTS, ROUTES } from '@/lib/constants';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
@@ -77,7 +78,7 @@ export default function SignIn() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push('/dashboard');
+      router.push(ROUTES.dashboard);
     }
   }, [isAuthenticated]);
 
@@ -86,7 +87,7 @@ export default function SignIn() {
 
     try {
       await login(data.email, data.password);
-      router.push('/dashboard');
+      router.push(ROUTES.dashboard);
     } catch (error) {
       console.error('Login error:', error);
       setError('Something went wrong. Please try again.');
