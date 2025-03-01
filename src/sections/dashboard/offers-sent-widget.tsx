@@ -1,7 +1,7 @@
 'use client';
 
 import { useDashboardStat } from '@/hooks/api/useDashboardStat';
-import { Card, Skeleton, useTheme } from '@mui/material';
+import { Card, Grid2, Skeleton, useTheme } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -104,7 +104,7 @@ const OffersSentChart = () => {
       </Card>
     );
 
-  if (error) return <Card>Error loading data.</Card>;
+  if (error) return <Card sx={{ padding: 3 }}>Error loading data.</Card>;
 
   return <Chart options={options} series={chartData.series} type="line" height={350} />;
 };

@@ -104,7 +104,7 @@ const OfferTable: React.FC<OfferTableProps> = ({
       label: 'Actions',
       align: 'center',
       renderActions: (row) => (
-        <>
+        <Box sx={{ display: 'flex', justifyContent: 'center', minWidth: 0 }}>
           <IconButton onClick={() => console.log('Editing row:', row)} size="small">
             <Iconify icon="ic:baseline-edit" width={18} height={18} />
           </IconButton>
@@ -127,7 +127,7 @@ const OfferTable: React.FC<OfferTableProps> = ({
             <MenuItem onClick={() => console.log('View Details:', row)}>View Details</MenuItem>
             <MenuItem onClick={() => console.log('Deleting row:', row)}>Delete</MenuItem>
           </Menu>
-        </>
+        </Box>
       ),
     },
   ];

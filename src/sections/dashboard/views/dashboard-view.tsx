@@ -1,20 +1,20 @@
 import { WIDGET_TEXT } from '@/lib/constants';
-import Summary from '@/sections/dashboard/summary-widgets';
 import WebsiteVisitsChart from '@/sections/dashboard/website-visits-widget';
 import { Box, CardHeader } from '@mui/material';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid2';
+import { Suspense } from 'react';
 import DashboardHeader from '../header';
 import OfferListWidget from '../offer-list-widget';
-// import OfferListWidget from '../offer-list-widget';
 import OffersSentChart from '../offers-sent-widget';
+import SummaryWidgets from '../summary-widgets';
 
 export default function DashboardView() {
   return (
-    <>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+      <Suspense>
         <DashboardHeader />
-        <Summary />
+        <SummaryWidgets />
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 6 }}>
             <Card>
@@ -35,7 +35,7 @@ export default function DashboardView() {
             <OfferListWidget />
           </Card>
         </Grid>
-      </Box>
-    </>
+      </Suspense>
+    </Box>
   );
 }

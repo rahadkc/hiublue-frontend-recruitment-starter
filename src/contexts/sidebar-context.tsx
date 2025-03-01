@@ -12,7 +12,7 @@ type SidebarContextType = {
 export const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
 export const SidebarProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
   const isExtraLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('xl'));
   const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));

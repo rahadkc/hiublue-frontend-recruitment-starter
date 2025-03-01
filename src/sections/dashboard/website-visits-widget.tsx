@@ -1,7 +1,8 @@
 'use client';
 
 import { useDashboardStat } from '@/hooks/api/useDashboardStat';
-import { Card, Skeleton, useTheme } from '@mui/material';
+import { WIDGET_TEXT } from '@/lib/constants';
+import { Card, CardHeader, Grid2 as Grid, Skeleton, useTheme } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
@@ -75,7 +76,7 @@ const WebsiteVisitsChart = () => {
         <Skeleton variant="rectangular" width="100%" height={341} />
       </Card>
     );
-  if (error) return <div>Sorry! no data.</div>;
+  if (error) return <Card sx={{ padding: 3 }}>Sorry! no data.</Card>;
 
   return <Chart options={options} series={series} type="bar" height={350} />;
 };

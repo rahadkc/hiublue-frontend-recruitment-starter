@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid2';
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
 
-const Summary = () => {
+const SummaryWidgets = () => {
   const searchParams = useSearchParams();
   const filter = searchParams.get('filter') || 'this-week';
   const { data, isLoading, error } = useDashboardSummary(filter);
@@ -29,7 +29,12 @@ const Summary = () => {
   const clicksTrend = getTrend(current.clicks, previous.clicks);
   const appearanceTrend = getTrend(current.appearance, previous.appearance);
 
-  if (error) return <Grid container>Sorry, something is wrong.</Grid>;
+  if (error)
+    return (
+      <Grid container sx={{ padding: 3 }}>
+        Sorry, something is wrong.
+      </Grid>
+    );
 
   return (
     <Grid container spacing={2}>
@@ -70,4 +75,4 @@ const Summary = () => {
   );
 };
 
-export default Summary;
+export default SummaryWidgets;

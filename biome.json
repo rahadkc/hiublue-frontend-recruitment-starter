@@ -25,15 +25,15 @@
 					"nursery": {},
 					"correctness": {
 						"noUnusedVariables": "error",
-						"useExhaustiveDependencies": "warn"
+						"useExhaustiveDependencies": "off"
 					},
 					"suspicious": {
 						"noConsoleLog": "warn",
 						"noExplicitAny": "warn",
-						"noArrayIndexKey": "warn"
+						"noArrayIndexKey": "info"
 					},
 					"performance": {
-						"noAccumulatingSpread": "info"
+						"noAccumulatingSpread": "warn"
 					},
 					"security": {
 						"noDangerouslySetInnerHtml": "off"

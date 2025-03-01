@@ -14,6 +14,7 @@ import {
   FormControlLabel,
   FormHelperText,
   FormLabel,
+  InputAdornment,
   MenuItem,
   Radio,
   RadioGroup,
@@ -239,13 +240,18 @@ export default function OnboardingForm() {
                   <TextField
                     fullWidth
                     type="number"
-                    placeholder="$ Price"
+                    placeholder="Price"
                     value={field.value ?? ''}
                     error={!!errors.price}
                     helperText={errors.price?.message}
                     onChange={(e) => {
                       const value = e.target.value === '' ? '' : Number.parseFloat(e.target.value);
                       field.onChange(value);
+                    }}
+                    slotProps={{
+                      input: {
+                        startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                      },
                     }}
                   />
                 )}
