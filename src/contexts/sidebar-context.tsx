@@ -1,3 +1,5 @@
+'use client';
+
 import { Theme, useMediaQuery } from '@mui/material';
 import { createContext, useEffect, useState } from 'react';
 

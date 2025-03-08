@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuth } from '@/hooks/useAuth';
-import { ENDPOINTS, ROUTES } from '@/lib/constants';
+import { ROUTES } from '@/lib/constants';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
@@ -178,7 +178,6 @@ export default function SignIn() {
             <Button type="submit" fullWidth variant="contained" disabled={isSubmitting}>
               {isSubmitting ? 'Signing in...' : 'Sign in'}
             </Button>
-
             <Link
               component="button"
               type="button"
